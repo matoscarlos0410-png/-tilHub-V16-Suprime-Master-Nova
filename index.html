@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07111f">
+<meta name="description" content="ÚtilHub V15 — herramientas útiles con NOVA FLOW.">
+
+<link rel="manifest" href="./manifest.webmanifest">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%2322d3ee'/%3E%3Cstop offset='.55' stop-color='%233b82f6'/%3E%3Cstop offset='1' stop-color='%237c3aed'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='128' height='128' rx='30' fill='%23050914'/%3E%3Crect x='5' y='5' width='118' height='118' rx='27' fill='none' stroke='url(%23g)' stroke-width='5'/%3E%3Cpath d='M27 31v38c0 18 10 27 25 27s25-9 25-27V31M82 31v65m0-33h25M107 31v65' fill='none' stroke='url(%23g)' stroke-width='11' stroke-linecap='round'/%3E%3Cpath d='M16 78c27-20 61-25 96-14' fill='none' stroke='%2322d3ee' stroke-width='3.5' stroke-linecap='round'/%3E%3Ccircle cx='112' cy='65' r='4' fill='white'/%3E%3C/svg%3E">
+
+<title>ÚtilHub V15 — NOVA FLOW</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+<canvas id="nova"></canvas>
+<div id="glow"></div>
+
+<header class="topbar">
+  <a class="brand" href="#">
+    <span class="brandMark">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M20 25v31c0 14 8 21 20 21s20-7 20-21V25M64 25v52m0-26h18M82 25v52"
+          fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <span>
+      <b>ÚtilHub</b>
+      <small>V15 • NOVA FLOW</small>
+    </span>
+  </a>
+
+  <div class="topActions">
+    <button id="themeBtn" class="iconBtn" title="Cambiar tema">☀️</button>
+    <button id="motionBtn" class="iconBtn" title="Animaciones">✦</button>
+    <button id="commandBtn" class="commandBtn">⌘ Buscar</button>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="heroCopy">
+    <span class="eyebrow">NOVA FLOW • ADVANCED CORE</span>
+    <h1>Todo lo útil,<br><span>en un solo lugar.</span></h1>
+    <p>
+      Herramientas rápidas para estudiar, organizarte, convertir datos,
+      buscar información, comprar y encontrar comida.
+    </p>
+
+    <div class="heroActions">
+      <button class="primary" data-open="calculator">Abrir calculadora</button>
+      <button class="secondary" data-scroll="tools">Ver herramientas</button>
+    </div>
+  </div>
+
+  <div class="novaPanel">
+    <div class="novaHud">
+      <span>NOVA CORE</span>
+      <span id="modeLabel">COSMIC</span>
+    </div>
+
+    <div class="novaCore">
+      <div class="orbit orbit1"></div>
+      <div class="orbit orbit2"></div>
+      <div class="orbit orbit3"></div>
+      <div class="core">
+        <span>N</span>
+      </div>
+      <div class="scan"></div>
+    </div>
+
+    <div class="novaStats">
+      <div>
+        <small>FPS</small>
+        <b id="fps">--</b>
+      </div>
+      <div>
+        <small>TOOLS</small>
+        <b id="toolCount">24</b>
+      </div>
+      <div>
+        <small>MODE</small>
+        <b id="novaMode">AUTO</b>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="searchZone">
+  <div class="searchBox">
+    <span>⌕</span>
+    <input id="search" type="search" placeholder="Busca una herramienta...">
+    <kbd>Ctrl K</kbd>
+  </div>
+
+  <div class="categories" id="categories">
+    <button class="active" data-cat="all">Todo</button>
+    <button data-cat="calc">Cálculo</button>
+    <button data-cat="convert">Conversión</button>
+    <button data-cat="time">Tiempo</button>
+    <button data-cat="text">Texto</button>
+    <button data-cat="organize">Organización</button>
+    <button data-cat="useful">Utilidades</button>
+    <button data-cat="food">🍔 Comidas</button>
+    <button data-cat="shopping">🛍️ Compras</button>
+  </div>
+</section>
+
+<section id="tools" class="section">
+  <div class="sectionHead">
+    <div>
+      <span class="eyebrow">TOOLBOX</span>
+      <h2>Herramientas</h2>
+    </div>
+    <span id="resultCount" class="muted">24 herramientas</span>
+  </div>
+
+  <div id="toolGrid" class="toolGrid"></div>
+</section>
+
+<section class="novaControls section">
+  <div class="sectionHead">
+    <div>
+      <span class="eyebrow">NOVA FLOW</span>
+      <h2>Centro de control</h2>
+    </div>
+  </div>
+
+  <div class="controlGrid">
+
+    <article class="controlCard">
+      <span class="controlIcon">🌌</span>
+      <div>
+        <b>Modo NOVA</b>
+        <small>Cambia el estilo de la animación.</small>
+      </div>
+      <button id="modeBtn" class="secondary small">Cambiar</button>
+    </article>
+
+    <article class="controlCard">
+      <span class="controlIcon">⚡</span>
+      <div>
+        <b>Rendimiento</b>
+        <small>Reduce partículas para equipos lentos.</small>
+      </div>
+      <label class="switch">
+        <input id="performanceToggle" type="checkbox">
+        <span></span>
+      </label>
+    </article>
+
+    <article class="controlCard">
+      <span class="controlIcon">✨</span>
+      <div>
+        <b>Efectos</b>
+        <small>Activa o desactiva efectos visuales.</small>
+      </div>
+      <label class="switch">
+        <input id="effectsToggle" type="checkbox" checked>
+        <span></span>
+      </label>
+    </article>
+
+    <article class="controlCard">
+      <span class="controlIcon">💾</span>
+      <div>
+        <b>Datos locales</b>
+        <small>Exporta o importa tus datos.</small>
+      </div>
+      <div class="miniActions">
+        <button id="exportBtn" class="secondary small">Exportar</button>
+        <label class="secondary small fileBtn">
+          Importar
+          <input id="importFile" type="file" accept=".json">
+        </label>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="sectionHead">
+    <div>
+      <span class="eyebrow">QUICK ACCESS</span>
+      <h2>Acceso rápido</h2>
+    </div>
+  </div>
+
+  <div class="shortcuts">
+
+    <button data-open="calculator">
+      🧮
+      <b>Calculadora</b>
+      <small>Cálculos rápidos</small>
+    </button>
+
+    <button data-open="password">
+      🔐
+      <b>Contraseña</b>
+      <small>Generador seguro</small>
+    </button>
+
+    <button data-open="qr">
+      ▦
+      <b>Código QR</b>
+      <small>Generador QR</small>
+    </button>
+
+    <button data-open="notes">
+      📝
+      <b>Notas</b>
+      <small>Guarda ideas</small>
+    </button>
+
+    <button data-open="tasks">
+      ✅
+      <b>Tareas</b>
+      <small>Organización</small>
+    </button>
+
+    <button data-open="shopping">
+      🛍️
+      <b>Compras</b>
+      <small>Buscar productos</small>
+    </button>
+
+    <button data-open="food">
+      🍔
+      <b>Comidas</b>
+      <small>Buscar comida</small>
+    </button>
+
+  </div>
+</section>
+
+</main>
+
+<div id="modal" class="modal hidden">
+  <div class="modalBackdrop"></div>
+  <div class="modalCard">
+    <div class="modalHead">
+      <h3 id="modalTitle">Herramienta</h3>
+      <button id="closeModal" class="iconBtn">✕</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<footer>
+  <b>ÚtilHub V15</b>
+  <span>•</span>
+  <span>NOVA FLOW</span>
+  <span>•</span>
+  <span>Sin IA</span>
+</footer>
+
+<script src="./script.js"></script>
+</body>
+</html>
